@@ -77,19 +77,20 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
 
 
 
 
 
-
+<meta name="description" content="While there is life there is hope">
 <meta property="og:type" content="website">
 <meta property="og:title" content="flymarco">
 <meta property="og:url" content="https://flymarco.github.io/index.html">
 <meta property="og:site_name" content="flymarco">
+<meta property="og:description" content="While there is life there is hope">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flymarco">
+<meta name="twitter:description" content="While there is life there is hope">
 
 
 
@@ -198,6 +199,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
@@ -239,9 +250,9 @@
   <link itemprop="mainEntityOfPage" href="https://flymarco.github.io/2016/11/24/bitmap/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="marco">
+    <meta itemprop="name" content="flymarco">
     <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
+    <meta itemprop="image" content="/images/flymarco.jpg">
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -331,199 +342,14 @@
 
       
         
-          
-            <h2 id="Bitmap"><a href="#Bitmap" class="headerlink" title="Bitmap"></a>Bitmap</h2><p>BMP是一种图形文件格式，将图像定义为由像素点组成。在Windows3.0以前BMP文件格式与显示设备有关，称为设备相关位图DDB，Windows3.0以后BMP文件格式与显示设备无关，称为设备无关位图DIB。</p>
-<p>BMP位图文件默认扩展名为BMP或者bmp。</p>
-<h3 id="BMP格式结构"><a href="#BMP格式结构" class="headerlink" title="BMP格式结构"></a>BMP格式结构</h3><p>BMP文件数据可以分成四部分，按顺序排列为：</p>
-<ul>
-<li>位图文件头：标注文件格式、大小等信息</li>
-<li>位图信息头：标注图像尺寸、颜色格式等信息</li>
-<li>调色板：用以索引对应的颜色的映射表，24位和32位位图无调色板</li>
-<li>位图数据：图像数据区</li>
-</ul>
-<h5 id="文件信息头"><a href="#文件信息头" class="headerlink" title="文件信息头"></a>文件信息头</h5><pre><code>文件类型         //2字节,&apos;BM&apos;
-文件大小        //4字节
-保留位             //2字节,设置为0
-保留位             //2字节,设置为0
-数据偏移量        //4字节,大小为文件头、信息头和调色板的总和
-</code></pre><h5 id="位图信息头"><a href="#位图信息头" class="headerlink" title="位图信息头"></a>位图信息头</h5><pre><code>信息头大小        //4字节,大小为40字节
-图像宽度        //4字节,以像素为单位
-图像高度        //4字节，以像素为单位
-平面数             //2字节，恒为1
-像素位数        //2字节，1、4、8、16、24、32
-压缩信息        //4字节，一般为BI_RGB不压缩
-数据大小        //4字节
-水平分辨率        //4字节，每米像素个数
-垂直分辨率        //4字节，每米像素个数
-颜色数             //4字节
-重要颜色数        //4字节
-</code></pre><h5 id="调色板"><a href="#调色板" class="headerlink" title="调色板"></a>调色板</h5><pre><code>蓝色分量        //1字节
-绿色分量        //1字节
-红色分量        //1字节
-保留值            //1字节
-</code></pre><h3 id="Bitmap编码实战"><a href="#Bitmap编码实战" class="headerlink" title="Bitmap编码实战"></a>Bitmap编码实战</h3><h5 id="相机数据生成24位Bitmap图像"><a href="#相机数据生成24位Bitmap图像" class="headerlink" title="相机数据生成24位Bitmap图像"></a>相机数据生成24位Bitmap图像</h5><p>通过相机预览得到原始<code>NV21</code>数据，将<code>NV21</code>转为<code>RGB</code>格式，将<code>文件头</code>、<code>信息头</code>、<code>图像数据</code>打包写到文件中。</p>
-<ol>
-<li>数据来源<code>PreviewCallback</code></li>
-<li><p>数据格式转换<code>NV21</code>到<code>RGB888</code></p>
-<p> <code>NV21</code>数据格式为：</p>
-<p> <code>YYYYYYYY
- YYYYYYYY
- YYYYYYYY
- YYYYYYYY
- VUVUVUVU
- VUVUVUVU</code></p>
-<p> 相邻四个<code>Y</code>分量共用一个<code>VU</code>分量，所以同时取四个<code>Y</code>分量和一个<code>VU</code>分量转换为四个<code>RGB</code>值,转换公式为：</p>
-<p> <code>r = y + 1.402f * u;    g = y - 0.344f * v + 0.714f * u;b = y + 1.772f * v;</code></p>
-</li>
-<li><p>数据整合</p>
-<p> 完成<code>文件头</code>、<code>信息头</code>的数据填充，与<code>RGB</code>数据整合成BMP文件的所有二进制数据。</p>
-<p> 由于BMP要求图像宽度需要是4的整数倍，不足的需要添加字节补齐，补齐后图像实际宽度计算公式为：</p>
-<p> <code>(((width) * (BitCount) / 8) + 3) &amp; ~3</code></p>
-<p> BMP图像扫描是从下往上的，所以图像数据在排列时先排列最后一行数据，依次存放到首行为止，所以整合数据时保证<code>RGB</code>数据的顺序。</p>
-</li>
-<li><p>保存到文件</p>
-<p> 通过Java I/O输出到文件。</p>
-</li>
-</ol>
-<h6 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h6><p>通过计算得到的数据的大小<code>i</code>，得到其在数据信息中的4个字节的存储格式。</p>
-<pre><code>void writeArray(String string, byte[] out, int i) {
-    if (string.length() == 0) {
-        return;
-    } else if (string.length() &lt; 2) {
-        out[i] = Integer.valueOf(string, 16).byteValue();
-    } else {
-        out[i] = Integer.valueOf(
-                string.substring(string.length() - 2, string.length()), 16)
-                .byteValue();
-        writeArray(string.substring(0, string.length() - 2), out, i + 1);
-    }
-}
-</code></pre><p>以下是<code>NV21</code>转为<code>RGB</code>的代码，四个<code>Y</code>分量对应各一个<code>V</code>、<code>U</code>分量，转为四个<code>RGB</code>像素值。</p>
-<pre><code>for (int i = 0, k = 0; i &lt; size; i += 2, k += 2) {
-    y1 = data[i] &amp; 0xff;
-    y2 = data[i + 1] &amp; 0xff;
-    y3 = data[width + i] &amp; 0xff;
-    y4 = data[width + i + 1] &amp; 0xff;
-
-    v = data[offset + k] &amp; 0xff;
-    u = data[offset + k + 1] &amp; 0xff;
-    u = u - 128;
-    v = v - 128;
-
-    pixels[i] = convertYUVtoARGB(y1, u, v);
-    pixels[i + 1] = convertYUVtoARGB(y2, u, v);
-    pixels[width + i] = convertYUVtoARGB(y3, u, v);
-    pixels[width + i + 1] = convertYUVtoARGB(y4, u, v);
-
-    if (i != 0 &amp;&amp; (i + 2) % width == 0)
-        i += width;
-}
-
-private int convertYUVtoARGB(int y, int u, int v) {
-    int r, g, b;
-
-    r = y + (int) 1.402f * u;
-    g = y - (int) (0.344f * v + 0.714f * u);
-    b = y + (int) 1.772f * v;
-    r = r &gt; 255 ? 255 : r &lt; 0 ? 0 : r;
-    g = g &gt; 255 ? 255 : g &lt; 0 ? 0 : g;
-    b = b &gt; 255 ? 255 : b &lt; 0 ? 0 : b;
-    return 0xff000000 | (r &lt;&lt; 16) | (g &lt;&lt; 8) | b;
-}
-</code></pre><p>整合数据时注意图像数据的保存顺序，由下往上依次逐行保存。</p>
-<pre><code>for (int i = height - 1; i &gt;= 0; i--) {
-    for (int j = 0; j &lt; width; j++) {
-        result[key++] = (byte) ((temp[i*width + j] &gt;&gt; 16) &amp; 0xFF);
-        result[key++] = (byte) ((temp[i*width + j] &gt;&gt; 8) &amp; 0xFF);
-        result[key++] = (byte) ((temp[i*width + j]) &amp; 0xFF);
-        for(int k = 0;k &lt; offsetSize;k++) result[key++] = 0x00;
-    }
-}
-</code></pre><h6 id="图片实例"><a href="#图片实例" class="headerlink" title="图片实例"></a>图片实例</h6><ol>
-<li><p>160x120</p>
-<p> <img src="/160x120.jpg" alt="160_120"></p>
-</li>
-<li><p>720x480</p>
-<p> <img src="/720x480.bmp" alt="720x480"></p>
-</li>
-</ol>
-<h5 id="自定义16色Bitmap图像"><a href="#自定义16色Bitmap图像" class="headerlink" title="自定义16色Bitmap图像"></a>自定义16色Bitmap图像</h5><p>16色Bitmap图像中每个像素点占有1个字节，总共含有16色的调色板，数据区存储的是指向调色板的索引值，最终颜色由调色板定义。</p>
-<h6 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h6><ol>
-<li>此时Bitmap中的文件大小和数据偏移量都要加上调色板的数据大小64B</li>
-<li>像素位数为4，即一个字节表示两个像素</li>
-<li>所使用颜色数为16</li>
-</ol>
-<p>调色板的定义如下：</p>
-<pre><code>private byte[] COLOR_LIST = new byte[]{
-    (byte) 0x88, (byte)    0x00, (byte) 0xFF, (byte) 0xFF,     // 0
-    (byte) 0x00, (byte) 0x00, (byte) 0xFF, (byte) 0xFF,     // 1
-    (byte) 0x00, (byte) 0x88, (byte) 0xFF, (byte) 0xFF,     // 2
-    (byte) 0x00, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF,     // 3
-    (byte) 0x00, (byte) 0xFF, (byte) 0xBB, (byte) 0xFF,     // 4
-    (byte) 0x00, (byte) 0xFF, (byte) 0x77, (byte) 0xFF,     // 5
-    (byte) 0xCC, (byte) 0xFF, (byte) 0x00, (byte) 0xFF,     // 6
-    (byte) 0xFF, (byte) 0xBB, (byte) 0x00, (byte) 0xFF,     // 7
-    (byte) 0xFF, (byte)    0x00, (byte) 0x00, (byte) 0xFF,     // 8
-    (byte) 0xFF, (byte)    0x00, (byte) 0x77, (byte) 0xFF,     // 9
-    (byte) 0xFF, (byte)    0x00, (byte) 0xCC, (byte) 0xFF,     // 10
-    (byte) 0xFF, (byte)    0x00, (byte) 0xFF, (byte) 0xFF,     // 11
-    (byte) 0xFF, (byte) 0xBB, (byte) 0xCC, (byte) 0xFF,     // 12
-    (byte) 0xFF, (byte) 0xFF, (byte) 0x99, (byte) 0xFF,     // 13
-    (byte) 0x99, (byte) 0xFF, (byte) 0x99, (byte) 0xFF,     // 14
-    (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF,     // 15
-};
-</code></pre><h6 id="图片实例-1"><a href="#图片实例-1" class="headerlink" title="图片实例"></a>图片实例</h6><ol>
-<li><p>16x16</p>
-<p> <img src="/16x16.jpg" alt="16x16"></p>
-<p> 位图的数据是自己写的，共占有128B的大小。</p>
-</li>
-</ol>
-<h3 id="灰度图"><a href="#灰度图" class="headerlink" title="灰度图"></a>灰度图</h3><blockquote>
-<p>那白色和黑色之间按对数关系分为若干等级称为灰度，灰度分为256阶，用灰度表示的图像称为灰度图。</p>
-</blockquote>
-<p>将RGB转换为灰度的方式有：</p>
-<ol>
-<li>浮点算法：<code>Gray=Rx0.299+Gx0.587+Bx0.114</code></li>
-<li>整数方法：<code>Gray=(Rx299+Gx587+Bx114+500)/1000</code></li>
-<li>移位方法：<code>Gray=(Rx76+Gx151+Bx28)&gt;&gt;8</code></li>
-<li>平均值法：<code>Gray=(R+G+B)/3</code></li>
-</ol>
-<h6 id="编码实例"><a href="#编码实例" class="headerlink" title="编码实例"></a>编码实例</h6><p>本例用24位彩色图转为8位灰度图，在灰度图中每个像素占有1B，并且带有1024B的<code>调色板</code>，其中每个调色板索引值中<code>R</code>、<code>G</code>、<code>B</code>分量都相等。</p>
-<p>定义调色板：</p>
-<pre><code>COLOR_LIST = new byte[256 * 4];
-for (int i = 0; i &lt; 256; i++) {
-    COLOR_LIST[i * 4] = (byte) i;
-    COLOR_LIST[i * 4 + 1] = (byte) i;
-    COLOR_LIST[i * 4 + 2] = (byte) i;
-    COLOR_LIST[i * 4 + 3] = (byte) 0xFF;
-}
-</code></pre><p>RGB转灰度方法：</p>
-<pre><code>for (int i = 0; i &lt; width * height; i++) {
-    res[i] = (byte) (data[key++] * 0.299 + data[key++] * 0.587 + data[key++] * 0.114);
-}
-</code></pre><p>得到最终图像数据，每行字节不足时补齐字节：</p>
-<pre><code>for (int i = 0; i &lt; in.length; i++) {
-    ALLDATA[key++] = in[i];
-    if (i &gt; 0 &amp;&amp; i % (width - 1) == 0) {
-        for (int j = 0; j &lt; offsetSize; j++) {
-            ALLDATA[key++] = 0x00;
-        }
-    }
-}
-</code></pre><ol>
-<li><p>原图片：</p>
-<p> <img src="/zz.bmp" alt="原图"></p>
-<p> 灰度图：</p>
-<p> <img src="/grey.bmp" alt="灰度图"></p>
-</li>
-<li><p>原图片：</p>
-<p> <img src="/a.bmp" alt="原图"></p>
-<p> 灰度图：</p>
-<p> <img src="/a_grey.bmp" alt="灰度图"></p>
-</li>
-</ol>
-
-          
+          <h1 id="Bitmap"><a href="#Bitmap" class="headerlink" title="Bitmap"></a>Bitmap</h1><p>BMP&#x662F;&#x4E00;&#x79CD;&#x56FE;&#x5F62;&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#xFF0C;&#x5C06;&#x56FE;&#x50CF;&#x5B9A;&#x4E49;&#x4E3A;&#x7531;&#x50CF;&#x7D20;&#x70B9;&#x7EC4;&#x6210;&#x3002;&#x5728;Windows3.0&#x4EE5;&#x524D;BMP&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x4E0E;&#x663E;&#x793A;&#x8BBE;&#x5907;&#x6709;&#x5173;&#xFF0C;&#x79F0;&#x4E3A;&#x8BBE;&#x5907;&#x76F8;&#x5173;&#x4F4D;&#x56FE;DDB&#xFF0C;Windows3.0&#x4EE5;&#x540E;BMP&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x4E0E;&#x663E;&#x793A;&#x8BBE;&#x5907;&#x65E0;&#x5173;&#xFF0C;&#x79F0;&#x4E3A;&#x8BBE;&#x5907;&#x65E0;&#x5173;&#x4F4D;&#x56FE;DIB&#x3002;<br></p>
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/11/24/bitmap/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -584,10 +410,10 @@ for (int i = 0; i &lt; 256; i++) {
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="marco" />
-          <p class="site-author-name" itemprop="name">marco</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+               src="/images/flymarco.jpg"
+               alt="flymarco" />
+          <p class="site-author-name" itemprop="name">flymarco</p>
+          <p class="site-description motion-element" itemprop="description">While there is life there is hope</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
@@ -599,10 +425,10 @@ for (int i = 0; i &lt; 256; i++) {
 
           
             <div class="site-state-item site-state-categories">
-              
+              <a href="/categories">
                 <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">分类</span>
-              
+              </a>
             </div>
           
 
@@ -620,6 +446,35 @@ for (int i = 0; i &lt; 256; i++) {
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FlyMarco" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xiaobaohang" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/liu-bao-xing-77" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
           
         </div>
 
@@ -653,7 +508,7 @@ for (int i = 0; i &lt; 256; i++) {
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">marco</span>
+  <span class="author" itemprop="copyrightHolder">flymarco</span>
 </div>
 
 
