@@ -1,0 +1,1108 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="动画," />
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="View &amp;#x52A8;&amp;#x753B;Tween &amp;#x52A8;&amp;#x753B;Tween&amp;#x52A8;&amp;#x753B;&amp;#x4E3B;&amp;#x5305;&amp;#x62EC; RotateAnimation (&amp;#x65CB;&amp;#x8F6C;)&amp;#x3001; ScaleAnimation (&amp;#x7F29;&amp;#x653E;)&amp;#x3001; TranslateAnimation (&amp;#x5E7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 动画">
+<meta property="og:url" content="https://flymarco.github.io/2017/03/21/Android动画/index.html">
+<meta property="og:site_name" content="flymarco">
+<meta property="og:description" content="View &amp;#x52A8;&amp;#x753B;Tween &amp;#x52A8;&amp;#x753B;Tween&amp;#x52A8;&amp;#x753B;&amp;#x4E3B;&amp;#x5305;&amp;#x62EC; RotateAnimation (&amp;#x65CB;&amp;#x8F6C;)&amp;#x3001; ScaleAnimation (&amp;#x7F29;&amp;#x653E;)&amp;#x3001; TranslateAnimation (&amp;#x5E7">
+<meta property="og:updated_time" content="2017-03-21T14:32:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 动画">
+<meta name="twitter:description" content="View &amp;#x52A8;&amp;#x753B;Tween &amp;#x52A8;&amp;#x753B;Tween&amp;#x52A8;&amp;#x753B;&amp;#x4E3B;&amp;#x5305;&amp;#x62EC; RotateAnimation (&amp;#x65CB;&amp;#x8F6C;)&amp;#x3001; ScaleAnimation (&amp;#x7F29;&amp;#x653E;)&amp;#x3001; TranslateAnimation (&amp;#x5E7">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://flymarco.github.io/2017/03/21/Android动画/"/>
+
+
+
+
+
+  <title> Android 动画 | flymarco </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">flymarco</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://flymarco.github.io/2017/03/21/Android动画/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="flymarco">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/marco.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="flymarco">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="flymarco" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android 动画
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-21T22:25:00+08:00">
+                2017-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="View-&#x52A8;&#x753B;"><a href="#View-&#x52A8;&#x753B;" class="headerlink" title="View &#x52A8;&#x753B;"></a>View &#x52A8;&#x753B;</h4><h5 id="Tween-&#x52A8;&#x753B;"><a href="#Tween-&#x52A8;&#x753B;" class="headerlink" title="Tween &#x52A8;&#x753B;"></a>Tween &#x52A8;&#x753B;</h5><p>Tween&#x52A8;&#x753B;&#x4E3B;&#x5305;&#x62EC; <code>RotateAnimation</code> (&#x65CB;&#x8F6C;)&#x3001; <code>ScaleAnimation</code> (&#x7F29;&#x653E;)&#x3001; <code>TranslateAnimation</code> (&#x5E73;&#x79FB;)&#x3001; <code>AlphaAnimation</code> (&#x900F;&#x660E;&#x5EA6;)&#x3001; <code>AnimationSet</code> (&#x52A8;&#x753B;&#x96C6;&#x5408;)&#x3002;</p>
+<a id="more"></a>
+<ol>
+<li><p>&#x4EE3;&#x7801;&#x521B;&#x5EFA;</p>
+<pre><code>1. &#x5355;&#x4E2A;&#x52A8;&#x753B;
+// 0&#xFF0C;180 &#x4E3A;&#x8D77;&#x59CB;&#x503C;&#x548C;&#x7EC8;&#x6B62;&#x503C;, float &#x7C7B;&#x578B;
+AlphaAnimation alphaAnimation = new AlphaAnimation(0&#xFF0C;180);
+
+// &#x914D;&#x7F6E;&#x53C2;&#x6570;
+alphaAnimation.setXXX();
+
+// &#x4E3A;&#x4E00;&#x4E2A; view &#x5F00;&#x542F;&#x52A8;&#x753B;
+view.startAnimation(alphaAnimation);
+
+2. &#x52A8;&#x753B;&#x96C6;&#x5408;
+// false &#x5404;&#x4E2A; animation &#x4F7F;&#x7528;&#x81EA;&#x5DF1;&#x7684; Interpolator&#xFF0C;true &#x5171;&#x7528; set &#x7684; Interpolator
+AnimationSet animationSet = new AnimationSet(false);
+
+// &#x6DFB;&#x52A0; Animation
+animationSet.addAnimaion(XXX);
+
+// &#x914D;&#x7F6E;&#x53C2;&#x6570;
+animationSet.setXXX();
+
+// &#x542F;&#x52A8;&#x52A8;&#x753B;
+view.startAnimation(animationSet);
+</code></pre></li>
+<li><p>XML &#x521B;&#x5EFA;</p>
+<pre><code>1. xml &#x6587;&#x4EF6;, /res/anim/anim_sample.xml
+// &#x5355;&#x4E2A;&#x52A8;&#x753B;
+&lt;alpha&gt;&lt;/alpha&gt;
+
+// &#x52A8;&#x753B;&#x96C6;&#x5408;
+&lt;set&gt;
+    &lt;alpha/&gt;
+    &lt;translate/&gt;
+&lt;/set&gt;
+
+2. java &#x52A0;&#x8F7D;
+Animation animation = AnimationUtils.loadAnimation(context, R.anima.anim_sample);
+</code></pre></li>
+<li><p>Interpolator</p>
+<pre><code>AccelerateDecelerateInterpolator    // &#x5148;&#x52A0;&#x901F;&#x540E;&#x51CF;&#x901F;
+AccelerateInterpolator    // &#x9010;&#x6E10;&#x52A0;&#x901F;
+LinearInterpolator    // &#x5E73;&#x7A33;&#x4E0D;&#x53D8;&#x7684;
+DecelerateInterpolator    // &#x9010;&#x6E10;&#x51CF;&#x901F;
+CycleInterpolator    // &#x66F2;&#x7EBF;&#x8FD0;&#x52A8;&#x7279;&#x6548;&#xFF0C;&#x8981;&#x4F20;&#x9012;float&#x578B;&#x7684;&#x53C2;&#x6570;
+
+//&#x81EA;&#x5B9A;&#x4E49; Interpolator
+class CustomInterpolator implements Interpolator {
+    @Override
+    public float getInterpolation(float input) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+}
+</code></pre></li>
+</ol>
+<h5 id="Frame-&#x52A8;&#x753B;"><a href="#Frame-&#x52A8;&#x753B;" class="headerlink" title="Frame &#x52A8;&#x753B;"></a>Frame &#x52A8;&#x753B;</h5><pre><code>// xml &#x521B;&#x5EFA;&#x8D44;&#x6E90;&#x6587;&#x4EF6; /res/drawable/frame_sample.xml
+&lt;animation-list&gt;
+    &lt;item android:drawable=&quot;@drawable/xxx&quot;
+        android:duration=&quot;xx&quot;/&gt;
+    &lt;item android:drawable=&quot;@drawable/xxx&quot;
+        android:duration=&quot;xx&quot;/&gt;
+&lt;/animation-list&gt;
+
+// java &#x52A0;&#x8F7D;&#x6267;&#x884C;
+image.setBackgroundResource(R.drawable.frame_sample);
+AnimationDrawable animationDrawable = (AnimationDrawable)image.getBackground();
+animationDrawable.start();
+</code></pre><h5 id="&#x5C5E;&#x6027;&#x52A8;&#x753B;"><a href="#&#x5C5E;&#x6027;&#x52A8;&#x753B;" class="headerlink" title="&#x5C5E;&#x6027;&#x52A8;&#x753B;"></a>&#x5C5E;&#x6027;&#x52A8;&#x753B;</h5><blockquote>
+<p>&#x6539;&#x53D8;&#x5BF9;&#x8C61;&#x7684;&#x5C5E;&#x6027;</p>
+</blockquote>
+<pre><code>Duration    // &#x6307;&#x5B9A;&#x52A8;&#x753B;&#x6301;&#x7EED;&#x65F6;&#x95F4;&#xFF0C;&#x9ED8;&#x8BA4;&#x65F6;&#x95F4;&#x662F;300ms
+TimeInterpolation    // &#x65F6;&#x95F4;&#x63D2;&#x503C;&#x5668;&#xFF0C;&#x5982;&#x52A0;&#x901F;&#x3001;&#x52A0;&#x901F;&#x7B49;&#x3002;
+Repeat count and behavior    // &#x91CD;&#x590D;&#x6B21;&#x6570;
+Animation Set    // &#x52A8;&#x753B;&#x5408;&#x96C6;&#x3002;&#x7528;&#x6765;&#x540C;&#x65F6;&#x6216;&#x8005;&#x987A;&#x5E8F;&#x64AD;&#x653E;&#x591A;&#x4E2A;&#x52A8;&#x753B;&#x3002;
+Frame Refresh Delay    // &#x591A;&#x957F;&#x65F6;&#x95F4;&#x5237;&#x65B0;&#x4E00;&#x6B21;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;10ms&#x3002;
+TypeEvaluator    // &#x7C7B;&#x578B;&#x4F30;&#x503C;&#xFF0C;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x8BBE;&#x7F6E;&#x52A8;&#x753B;&#x64CD;&#x4F5C;&#x5C5E;&#x6027;&#x7684;&#x503C;&#x3002;
+</code></pre><h5 id="ObjectAnimator"><a href="#ObjectAnimator" class="headerlink" title="ObjectAnimator"></a>ObjectAnimator</h5><p>ObjectAnimator &#x8981;&#x6C42;&#x5BF9;&#x8C61;&#x6709; <code>setter</code> &#x548C; <code>getter</code> &#x65B9;&#x6CD5;&#xFF0C;&#x5E76;&#x4E14;&#x5BF9;&#x5C5E;&#x6027;&#x7684;&#x4FEE;&#x6539;&#x80FD;&#x591F;&#x901A;&#x8FC7;&#x67D0;&#x79CD;&#x65B9;&#x5F0F;&#x53CD;&#x6620;&#x3002;</p>
+<pre><code>/&#xD7;
+ &#xD7; &#x521B;&#x5EFA; ObjectAnimator&#xFF0C;ofFloat&#x3001;ofInt&#x3001;ofObject &#x7B49;
+ &#xD7; &#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x8868;&#x793A;&#x53D8;&#x5316;&#x7684;&#x7EC8;&#x70B9;&#x503C;&#xFF0C;&#x4F1A;&#x901A;&#x8FC7; getter &#x65B9;&#x6CD5;&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x503C;&#x4E3A;&#x8D77;&#x59CB;&#x503C;
+ &#xD7; &#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x8868;&#x793A;&#x53D8;&#x5316;&#x7684;&#x8D77;&#x59CB;&#x503C;&#x3001;&#x7EC8;&#x70B9;&#x503C;
+ &#xD7; &#x591A;&#x4E2A;&#x53C2;&#x6570;&#x4E2D;&#x5305;&#x542B;&#x8D77;&#x59CB;&#x503C;&#x3001;&#x4E2D;&#x95F4;&#x503C;&#x3001;&#x7EC8;&#x70B9;&#x503C;
+ &#xD7;/
+ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, &quot;translationX&quot;, 0, 180F);
+
+// &#x8BBE;&#x7F6E;&#x53C2;&#x6570;&#xFF0C;&#x5982; Duration&#x3001;TimeInterpolator &#x7B49;
+objectAnimator.setXXX();
+
+// &#x5F00;&#x542F;&#x52A8;&#x753B;
+objectAnimator.start();
+</code></pre><h5 id="ValueAnimator"><a href="#ValueAnimator" class="headerlink" title="ValueAnimator"></a>ValueAnimator</h5><p>ValueAnimator &#x8BA1;&#x7B97;&#x5C5E;&#x6027;&#x503C;&#xFF0C;&#x6839;&#x636E;&#x5C5E;&#x6027;&#x503C;&#x6539;&#x53D8;&#x5BF9;&#x8C61;&#x7684;&#x5C5E;&#x6027;</p>
+<pre><code>// &#x521B;&#x5EFA; ValueAnimator&#xFF0C;&#x901A;&#x8FC7; ofFloat&#x3001;ofInt&#x3001;ofObject &#x7B49;
+ValueAnimator valueAnimator = ValueAnimator.ofFloat(30F, 180F, 60F);
+
+// &#x8BBE;&#x7F6E;&#x65F6;&#x95F4;&#x63D2;&#x503C;&#x5668;&#x3001;&#x7C7B;&#x578B;&#x4F30;&#x503C;&#x5668;&#x7B49;
+valueAnimator.setXXX();
+
+// &#x8BBE;&#x7F6E;&#x76D1;&#x542C;&#xFF0C;&#x6539;&#x53D8;&#x5BF9;&#x8C61;&#x5C5E;&#x6027;
+valueAnimator.addUpdateListener(new AnimatorUpdateListener() {        
+    @Override
+    public void onAnimationUpdate(ValueAnimator animation) {
+        // TODO Auto-generated method stub            
+    }
+});
+
+// &#x5F00;&#x542F;&#x52A8;&#x753B;
+valueAnimator.start();
+</code></pre><h5 id="AnimatorSet"><a href="#AnimatorSet" class="headerlink" title="AnimatorSet"></a>AnimatorSet</h5><pre><code>// AnimatorSet
+playSequentially(...);    // &#x987A;&#x5E8F;&#x6267;&#x884C;
+playTogether(...);    // &#x540C;&#x65F6;&#x6267;&#x884C;
+
+// AnimatorSet.Builder
+play(X)
+with(X)    // &#x548C; play() &#x540C;&#x65F6;&#x8FD0;&#x884C;
+after(X)    // &#x5728; play() &#x4E4B;&#x524D;&#x8FD0;&#x884C;
+before(X)    // &#x5728; play() &#x4E4B;&#x540E;&#x8FD0;&#x884C;
+
+//&#x542F;&#x52A8;&#x52A8;&#x753B;
+animatorSet.start();
+</code></pre><h5 id="TimeInterpolator"><a href="#TimeInterpolator" class="headerlink" title="TimeInterpolator"></a>TimeInterpolator</h5><pre><code>AccelerateInterpolator    // &#x52A0;&#x901F;
+DecelerateInterpolator    // &#x51CF;&#x901F;
+AccelerateDecelerateInterolator    // &#x5148;&#x52A0;&#x901F;&#x540E;&#x51CF;&#x901F;
+AnticipateInterpolator    // &#x53CD;&#x5411;
+AnticipateOvershootInterpolator    // &#x53CD;&#x5411;&#x52A0;&#x56DE;&#x5F39;
+BounceInterpolator    // &#x8DF3;&#x8DC3;
+CycleIinterpolator    // &#x5FAA;&#x73AF;
+LinearInterpolator    // &#x7EBF;&#x6027;
+OvershottInterpolator    // &#x56DE;&#x5F39;
+
+// &#x81EA;&#x5B9A;&#x4E49; TimeInterpolator
+class CustomTimeInterpolator implements TimeInterpolator {
+    @Override
+    public float getInterpolation(float input) {
+        // TODO Auto-generated method stub
+        return 0;
+    }    
+}
+</code></pre><h5 id="TypeEvaluator"><a href="#TypeEvaluator" class="headerlink" title="TypeEvaluator"></a>TypeEvaluator</h5><p>&#x901A;&#x8FC7;&#x52A8;&#x753B;&#x7684;&#x8FDB;&#x5EA6;&#x3001;&#x5C5E;&#x6027;&#x7684;&#x8D77;&#x59CB;&#x503C;&#x3001;&#x7EC8;&#x70B9;&#x503C;&#x8BA1;&#x7B97;&#x5F53;&#x524D;&#x5C5E;&#x6027;&#x7684;&#x503C;</p>
+<pre><code>ArgbEvaluator
+FloatArrayEvaluator
+FloatEvaluator
+IntArrayEvaluator
+IntEvaluator
+PointFEvaluator
+RectEvaluator
+
+// &#x81EA;&#x5B9A;&#x4E49; TypeEvaluator
+class Custom implements TypeEvaluator&lt;T&gt; {
+    @Override
+    public T evaluate(float fraction, T startValue, T endValue) {
+        // TODO Auto-generated method stub
+        return null;
+    }        
+}
+</code></pre><h5 id="PropertyValuesHolder"><a href="#PropertyValuesHolder" class="headerlink" title="PropertyValuesHolder"></a>PropertyValuesHolder</h5><p>&#x4FDD;&#x5B58;&#x52A8;&#x753B;&#x671F;&#x95F4;&#x5C5E;&#x6027;&#x7684;&#x53D8;&#x6362;&#x503C;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>ObjectAnimator</code> &#x548C; <code>ValueAnimator</code> &#x521B;&#x5EFA;&#x52A8;&#x753B;</p>
+<pre><code>// &#x521B;&#x5EFA; PropertyValuesHolder
+PropertyValuesHolder rotateX = PropertyValuesHolder.ofFloat(&quot;rotateX&quot;, 0, 180);
+PropertyValuesHolder rotateY = PropertyValuesHolder.ofFloat(&quot;rotateY&quot;, 0, 180);
+
+// &#x521B;&#x5EFA; Animator
+ValueAnimator o = ValueAnimator.ofPropertyValuesHolder(rotateX, rotateY);
+ObjectAnimator oa = ObjectAnimator.ofPropertyValuesHolder(view, rotateX, rotateY);
+</code></pre><h5 id="XML-&#x5B9A;&#x4E49;"><a href="#XML-&#x5B9A;&#x4E49;" class="headerlink" title="XML &#x5B9A;&#x4E49;"></a>XML &#x5B9A;&#x4E49;</h5><pre><code>1. animatior &#x5BF9;&#x5E94;&#x4E8E; ValueAnimator
+
+&lt;animator xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; 
+    android:interpolator=&quot;@android:anim/linear_interpolator&quot;
+    android:duration=&quot;300&quot;
+    android:startOffset=&quot;100&quot;
+    android:repeatCount=&quot;infinite&quot;
+    android:repeatMode=&quot;restart&quot;
+    android:valueFrom=&quot;0&quot;
+    android:valueTo=&quot;180&quot;
+    android:valueType=&quot;intType&quot;&gt;
+&lt;/animator&gt;
+
+// &#x4F7F;&#x7528; PrepertyValuesHolder
+&lt;animator xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+      android:duration=&quot;1000&quot;
+      android:repeatCount=&quot;1&quot;
+      android:repeatMode=&quot;reverse&quot;&gt;
+    &lt;propertyValuesHolder&gt;
+        &lt;keyframe android:fraction=&quot;0&quot; android:value=&quot;1&quot;/&gt;
+        &lt;keyframe android:fraction=&quot;.2&quot; android:value=&quot;.4&quot;/&gt;
+        &lt;keyframe android:fraction=&quot;1&quot; android:value=&quot;0&quot;/&gt;
+    &lt;/propertyValuesHolder&gt;
+&lt;/animator&gt;
+
+2. objectAnimator &#x5BF9;&#x5E94;&#x4E8E; ObjectAnimator
+
+&lt;objectAnimator xmlns:android=&quot;http://schemas.android.com/apk/res/    android&quot;
+    android:duration=&quot;1000&quot;
+    android:valueTo=&quot;200&quot;
+    android:valueType=&quot;floatType&quot;
+    android:propertyName=&quot;y&quot;
+    android:repeatCount=&quot;1&quot;
+    android:repeatMode=&quot;reverse&quot;/&gt;
+
+// &#x4F7F;&#x7528; PropertyValuesHolder
+&lt;objectAnimator xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:duration=&quot;1000&quot;
+    android:repeatCount=&quot;1&quot;
+    android:repeatMode=&quot;reverse&quot;&gt;
+    &lt;propertyValuesHolder android:propertyName=&quot;x&quot; android:valueTo=&quot;400&quot;/&gt;
+    &lt;propertyValuesHolder android:propertyName=&quot;y&quot; android:valueTo=&quot;200&quot;/&gt;
+&lt;/objectAnimator&gt;
+
+3. set &#x5BF9;&#x5E94;&#x4E8E; AnimatorSet
+
+&lt;set xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; 
+    android:ordering=&quot;sequentially&quot;&gt;
+    &lt;objectAnimator/&gt;
+    &lt;objectAnimator/&gt;
+&lt;/set&gt;
+
+// Java &#x4EE3;&#x7801;&#x52A0;&#x8F7D;
+Animator animator = AnimatorInflater.inflate(context, R.animator.animator_sample);
+animator.setTarget(view);
+animator.start();
+</code></pre><h5 id="ViewPropertyAnimator"><a href="#ViewPropertyAnimator" class="headerlink" title="ViewPropertyAnimator"></a>ViewPropertyAnimator</h5><pre><code>// &#x521B;&#x5EFA; ViewPropertyAnimator
+ViewPropertyAnimator viewPropertyAnimator = view.animate();
+
+// &#x4E00;&#x822C;&#x7528;&#x6CD5;
+view.animate().translateX(100).setDuration(300);
+
+// &#x8BE5;&#x65B9;&#x6CD5;&#x4F1A;&#x7ACB;&#x5373;&#x6267;&#x884C;&#x524D;&#x9762;&#x7684;&#x52A8;&#x753B;
+viewPropertyAnimator.start()&#xFF1B;
+
+// &#x4F8B; 1&#xFF0C;view &#x5E73;&#x79FB;&#x7684;&#x540C;&#x65F6;&#x653E;&#x5927;
+b.animate().translationX(300);
+b.animate().scaleX(2);
+
+// &#x4F8B; 2&#xFF0C;view &#x5148;&#x5E73;&#x79FB;&#x540E;&#x653E;&#x5927;
+b.animate().translationX(300).start();
+b.animate().scaleX(2);
+</code></pre><h5 id="Reveal-Animation"><a href="#Reveal-Animation" class="headerlink" title="Reveal Animation"></a>Reveal Animation</h5><pre><code>Animator animator = ViewAnimationUtils.createCircularReveal(view, centerX, centerY, startRadius, endRadius);
+</code></pre><h5 id="Layout-Animation"><a href="#Layout-Animation" class="headerlink" title="Layout Animation"></a>Layout Animation</h5><pre><code>1. ViewGroup
+android:animationLayoutChanges=&quot;true&quot;
+
+2. &#x81EA;&#x5B9A;&#x4E49;&#x6548;&#x679C;
+LayoutAnimationController layoutAnimationController = new LayoutAnimationController(animation, 0);
+layoutAniamtionController.setOrder(LayoutAnimationController.ORDER_NORMAL);
+layout.setLayoutAnimation(layoutAnimationController);
+</code></pre><h5 id="SVG-&#x52A8;&#x753B;"><a href="#SVG-&#x52A8;&#x753B;" class="headerlink" title="SVG &#x52A8;&#x753B;"></a>SVG &#x52A8;&#x753B;</h5><blockquote>
+<p>Android 5.X &#x63D0;&#x4F9B; VerctorDrawable &#x548C; AnimatedVectorDrawable &#x652F;&#x6301;SVG</p>
+</blockquote>
+<ol>
+<li><p>SVG &#x7B80;&#x4ECB;</p>
+<pre><code>// xml &#x6807;&#x7B7E;&#x793A;&#x4F8B;
+&lt;vector&gt;
+    &lt;group&gt;
+        &lt;path/&gt;
+    &lt;/group&gt;
+    &lt;path/&gt;
+&lt;/vector&gt;
+
+// SVG &#x5E38;&#x7528;&#x6307;&#x4EE4;
+M = moveto(M X,Y)    // &#x79FB;&#x52A8;&#x5230;&#x6307;&#x5B9A;&#x5750;&#x6807;
+L = lineto(L X,Y)    // &#x753B;&#x76F4;&#x7EBF;&#x5230;&#x6307;&#x5B9A;&#x4F4D;&#x7F6E;
+H = horizontal lineto(H X)    // &#x753B;&#x6A2A;&#x7EBF;
+V = Vertical lineto(V Y)    // &#x753B;&#x7AD6;&#x7EBF;
+C = curveto(C X1,Y1,X2,Y2,X,Y)    // &#x4E09;&#x6B21;&#x8D1D;&#x585E;&#x5C14;&#x66F2;&#x7EBF;
+S = smooth curveto(S X2,Y2,X,Y)    // &#x4E09;&#x6B21;&#x8D1D;&#x585E;&#x5C14;&#x66F2;&#x7EBF;
+Q = quadratic Belzier curve(Q X1,Y1,X,Y)    // &#x4E8C;&#x6B21;&#x8D1D;&#x585E;&#x5C14;&#x66F2;&#x7EBF;
+T = smooth quadratic Belzier curve(T X,Y)    // &#x6620;&#x5C04;&#x524D;&#x9762;&#x8DEF;&#x5F84;&#x7684;&#x7EC8;&#x70B9;
+A = elliptical Arc(A RX,RY,XROTATION,FLAG1,FLAG2,X,Y)    // &#x5F27;&#x7EBF;
+Z = closepath()    // &#x95ED;&#x5408;&#x8DEF;&#x5F84;
+
+1. X,Y &#x4E3A;&#x91CD;&#x70B9;&#x5750;&#x6807;&#xFF0C;&#x6307;&#x4EE4;&#x5927;&#x5199;&#x4E3A;&#x7EDD;&#x5BF9;&#x5750;&#x6807;&#xFF0C;&#x5C0F;&#x5199;&#x4E3A;&#x76F8;&#x5BF9;&#x5750;&#x6807;
+2. &#x540C;&#x4E00;&#x6307;&#x4EE4;&#x51FA;&#x73B0;&#x591A;&#x6B21;&#x53EF;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;
+</code></pre></li>
+<li><p>SVG &#x52A8;&#x753B;</p>
+<p> // xml &#x5B9A;&#x4E49;<br> &lt;animated-vector</p>
+<pre><code>android:drawable=&quot;&quot;&gt;
+&lt;target
+    android:name=&quot;&quot;
+    android:animation=&quot;&quot;/&gt;
+</code></pre><p> </p>
+<p> // &#x7279;&#x6B8A;&#x52A8;&#x753B;&#x5C5E;&#x6027;&#x8BBE;&#x7F6E;<br> android:propertyName=&#x201D;pathData&#x201D;<br> android:valueType=&#x201D;pathType&#x201D;</p>
+<p> android:propertyName=&#x201D;trimPathStart&#x201D;<br> android:propertyName=&#x201D;trimPathEnd&#x201D;</p>
+<p> // Java<br> ((Animatable) iv.getDrawable()).start();</p>
+</li>
+</ol>
+<h4 id="&#x8F6C;&#x573A;&#x52A8;&#x753B;"><a href="#&#x8F6C;&#x573A;&#x52A8;&#x753B;" class="headerlink" title="&#x8F6C;&#x573A;&#x52A8;&#x753B;"></a>&#x8F6C;&#x573A;&#x52A8;&#x753B;</h4><h5 id="ActivityOptionsCompat"><a href="#ActivityOptionsCompat" class="headerlink" title="ActivityOptionsCompat"></a>ActivityOptionsCompat</h5><pre><code>1. makeCustomAnimation
+
+makeCustomAnimation(context, int enterResId, int exitResId);
+
+2. makeScaleUpAnimation
+
+makeScaleUpAnimation (View source, int startX, int startY, int startWidth, int startHeight)
+
+3. makeSceneTransitionAnimation
+
+makeSceneTransitionAnimation (Activity activity, View sharedElement, String sharedElementName)
+makeSceneTransitionAnimation (Activity activity, Pair...&lt;View, String&gt; sharedElements)
+
+4. makeThumbnailScaleUpAnimation
+
+makeThumbnailScaleUpAnimation (View source, Bitmap thumbnail, int startX, int startY)
+</code></pre><h5 id="Transitions-between-Activities"><a href="#Transitions-between-Activities" class="headerlink" title="Transitions between Activities"></a>Transitions between Activities</h5><ol>
+<li><p>Fade&#x3001;Slide&#x3001;Explode</p>
+<pre><code>// xml
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;slide xmlns:android=&quot;http://schemas.android.com/apk/res/&quot;
+    android:duration=&quot;1000&quot;/&gt;
+Fade fade = TransitionInflater.from(context).inflateTransition(R.transition.fade);;
+
+// Java
+Fade fade = new Fade();
+fade.setDuration(1000);
+
+// &#x4F7F;&#x7528;
+getWindow().setEnterTransition(fade);
+getWindow().setExitTransition(fade);
+getWindow().setReturnTransition(fade);
+getWindow().setReenterTransition(fade);
+
+// &#x662F;&#x5426;&#x8986;&#x76D6;&#x524D;&#x4E00;&#x4E2A;&#x52A8;&#x753B;
+getWindow().setAllowReturnTransitionOverlap(false);
+getWindow().setAllowEnterTransitionOverlap(false); 
+</code></pre></li>
+<li><p>Shared elements between Activities</p>
+<pre><code>// /res/transition/
+&lt;changeBounds/&gt;    // &#x6539;&#x53D8;&#x76EE;&#x6807;&#x89C6;&#x56FE;&#x7684;&#x5E03;&#x5C40;&#x8FB9;&#x754C;
+&lt;changeClipBounds/&gt;    // &#x88C1;&#x526A;&#x76EE;&#x6807;&#x89C6;&#x56FE;&#x8FB9;&#x754C;
+&lt;changeTransform/&gt;    // &#x6539;&#x53D8;&#x76EE;&#x6807;&#x89C6;&#x56FE;&#x7684;&#x7F29;&#x653E;&#x6BD4;&#x4F8B;&#x548C;&#x65CB;&#x8F6C;&#x89D2;&#x5EA6;
+&lt;changeImageTransform/&gt;    // &#x6539;&#x53D8;&#x76EE;&#x6807;&#x56FE;&#x7247;&#x7684;&#x5927;&#x5C0F;&#x548C;&#x7F29;&#x653E;&#x6BD4;&#x4F8B;
+
+// step 1. style.xml
+&lt;item name=&quot;android:windowContentTransitions&quot;&gt;true&lt;/item&gt;
+&lt;item name=&quot;android:windowSharedElementEnterTransition&gt;@transition/changebounds&lt;/item&gt;
+&lt;item name=&quot;android:windowSharedElementExitTransition&quot;&gt;@transition/changebounds&lt;/item&gt;
+
+// step 2. a common transition name
+&lt;ImageView
+    ...
+    android:transitionName=&quot;@string/transition_name&quot;/&gt;
+
+// step 3. start Activity
+ActivityOptionsCompat compat = ActivityOptionsCompat.makeSceneTransitionAnimation(context, view, transitionName);
+ActivityCompat.startActivity(context, intent, compat.toBundle());
+</code></pre></li>
+<li><p>Shared elements between fragments</p>
+<pre><code>// step 1. style.xml
+
+// step 2. a common transition name
+
+// step 3. start fragment
+Fragment sharedElementFragment = SharedElementFragment.newInstance(sample);
+
+Slide slideTransition = new Slide(Gravity.RIGHT);
+ChangeBounds changeBoundsTransition = new ChangeBounds();
+
+sharedElementFragment.setEnterTransition(slideTransition);
+sharedElementFragment.setAllowEnterTransitionOverlap(overlap);
+sharedElementFragment.setAllowReturnTransitionOverlap(overlap);
+sharedElementFragment.setSharedElementEnterTransition(changeBoundsTransition);
+
+getFragmentManager().beginTransaction()
+    .replace(R.id.sample_content, sharedElementFragment)
+    .addToBackStack(null)
+    .addSharedElement(squareBlue, getString(R.string.square_blue_name))
+    .commit();
+</code></pre></li>
+<li><p>Animate view layout elements</p>
+<pre><code>// scene
+scene = Scene.getSceneForLayout(sceneRoot, R.layout.activity_animations_scene, this);
+
+TransitionManager.go(scene, new ChangeBounds());
+TransitionManager.go(scene, TransitionInflater.from(this).inflateTransition(R.transition.slide_and_changebounds));
+
+// slide_and_changebounds.xml
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;transitionSet xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:transitionOrdering=&quot;sequential&quot;&gt;
+    &lt;slide /&gt;
+    &lt;changeBounds /&gt;
+&lt;/transitionSet&gt;
+
+// Layout changes
+a) Begin Delayed Transition
+
+TransitionManager.beginDelayedTransition(sceneRoot);
+
+b) Change view layout properties
+
+ViewGroup.LayoutParams params = view.getLayoutParams();
+params.width = 200;
+view.setLayoutParams(params);
+</code></pre></li>
+<li><p>ViewPager</p>
+<pre><code>/*
+ * &#x5B9E;&#x73B0; PageTransformer
+ * position &#x6709;&#x6548;&#x8303;&#x56F4;&#x662F; [-1,1]
+ * [-1,0] &#x8868;&#x793A;&#x5F53;&#x524D; view &#x9010;&#x6E10;&#x9000;&#x51FA;
+ * [0,1] &#x8868;&#x793A;&#x4E0B;&#x4E00;&#x4E2A; view &#x6B63;&#x5728;&#x8FDB;&#x5165;
+class CustomPageTransformer implements ViewPager.PageTransformer{
+    @Override
+    public void transformPage(View view, float position) {
+        // TODO Auto-generated method stub
+
+    }
+}
+
+// &#x8BBE;&#x7F6E; ViewPager
+viewPager.setPageTransformer(true, new CustomPageTransformer);
+</code></pre></li>
+<li><p>FragmentManager</p>
+<pre><code>// &#x5B9A;&#x4E49; /animator/xx.xml
+card_flip_right_in.xml
+card_flip_right_out.xml
+card_flip_left_in.xml
+card_flip_left_out.xml
+
+// &#x8BBE;&#x7F6E;&#x66FF;&#x6362;&#x52A8;&#x753B;
+getFragmentManager()
+    .beginTransaction()
+    .setCustomAnimations(
+        R.animator.card_flip_right_in,
+        R.animator.card_flip_right_out,
+        R.animator.card_flip_left_in,
+        R.animator.card_flip_left_out)
+    .replace(R.id.container, new CardBackFragment())
+    .addToBackStack(null)
+    .commit();
+</code></pre></li>
+</ol>
+<h3 id="&#x94FE;&#x63A5;"><a href="#&#x94FE;&#x63A5;" class="headerlink" title="&#x94FE;&#x63A5;"></a>&#x94FE;&#x63A5;</h3><p><a href="https://github.com/daimajia/AndroidViewAnimations" title="AndroidViewAnimations" target="_blank" rel="external">https://github.com/daimajia/AndroidViewAnimations</a></p>
+<p><a href="https://github.com/CharonChui/AndroidNote/blob/master/BasicPart/Android%E5%8A%A8%E7%94%BB.md" title="Android" target="_blank" rel="external">https://github.com/CharonChui/AndroidNote/blob/master/BasicPart/Android%E5%8A%A8%E7%94%BB.md</a></p>
+<p><a href="https://github.com/lgvalle/Material-Animations" title="Material-Animations" target="_blank" rel="external">https://github.com/lgvalle/Material-Animations</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/动画/" rel="tag"># 动画</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/07/贝塞尔曲线/" rel="next" title="贝塞尔曲线">
+                <i class="fa fa-chevron-left"></i> 贝塞尔曲线
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/21/AIDL/" rel="prev" title="AIDL">
+                AIDL <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/marco.png"
+               alt="flymarco" />
+          <p class="site-author-name" itemprop="name">flymarco</p>
+          <p class="site-description motion-element" itemprop="description">While there is life there is hope</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FlyMarco" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xiaobaohang" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/liu-bao-xing-77" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#View-动画"><span class="nav-number">1.</span> <span class="nav-text">View 动画</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Tween-动画"><span class="nav-number">1.1.</span> <span class="nav-text">Tween 动画</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Frame-动画"><span class="nav-number">1.2.</span> <span class="nav-text">Frame 动画</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#属性动画"><span class="nav-number">1.3.</span> <span class="nav-text">属性动画</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ObjectAnimator"><span class="nav-number">1.4.</span> <span class="nav-text">ObjectAnimator</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ValueAnimator"><span class="nav-number">1.5.</span> <span class="nav-text">ValueAnimator</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AnimatorSet"><span class="nav-number">1.6.</span> <span class="nav-text">AnimatorSet</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TimeInterpolator"><span class="nav-number">1.7.</span> <span class="nav-text">TimeInterpolator</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TypeEvaluator"><span class="nav-number">1.8.</span> <span class="nav-text">TypeEvaluator</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PropertyValuesHolder"><span class="nav-number">1.9.</span> <span class="nav-text">PropertyValuesHolder</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#XML-定义"><span class="nav-number">1.10.</span> <span class="nav-text">XML 定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ViewPropertyAnimator"><span class="nav-number">1.11.</span> <span class="nav-text">ViewPropertyAnimator</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Reveal-Animation"><span class="nav-number">1.12.</span> <span class="nav-text">Reveal Animation</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Layout-Animation"><span class="nav-number">1.13.</span> <span class="nav-text">Layout Animation</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SVG-动画"><span class="nav-number">1.14.</span> <span class="nav-text">SVG 动画</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#转场动画"><span class="nav-number">2.</span> <span class="nav-text">转场动画</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ActivityOptionsCompat"><span class="nav-number">2.1.</span> <span class="nav-text">ActivityOptionsCompat</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Transitions-between-Activities"><span class="nav-number">2.2.</span> <span class="nav-text">Transitions between Activities</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链接"><span class="nav-number"></span> <span class="nav-text">链接</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flymarco</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

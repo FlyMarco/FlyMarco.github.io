@@ -1,0 +1,963 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="AIDL," />
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="AIDLAIDL &amp;#x5168;&amp;#x79F0;&amp;#x4E3A; Android Interface Definition Language&amp;#xFF0C;&amp;#x4E3B;&amp;#x8981;&amp;#x7528;&amp;#x4E8E;&amp;#x5BA2;&amp;#x6237;&amp;#x7AEF;&amp;#x548C;&amp;#x670D;&amp;#x52A1;&amp;#x7AEF;&amp;#x901A;&amp;#x4FE1;&amp;#x3002;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AIDL">
+<meta property="og:url" content="https://flymarco.github.io/2017/03/21/AIDL/index.html">
+<meta property="og:site_name" content="flymarco">
+<meta property="og:description" content="AIDLAIDL &amp;#x5168;&amp;#x79F0;&amp;#x4E3A; Android Interface Definition Language&amp;#xFF0C;&amp;#x4E3B;&amp;#x8981;&amp;#x7528;&amp;#x4E8E;&amp;#x5BA2;&amp;#x6237;&amp;#x7AEF;&amp;#x548C;&amp;#x670D;&amp;#x52A1;&amp;#x7AEF;&amp;#x901A;&amp;#x4FE1;&amp;#x3002;">
+<meta property="og:image" content="https://flymarco.github.io/2017/03/21/AIDL/Binder.jpg">
+<meta property="og:updated_time" content="2017-03-21T14:29:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AIDL">
+<meta name="twitter:description" content="AIDLAIDL &amp;#x5168;&amp;#x79F0;&amp;#x4E3A; Android Interface Definition Language&amp;#xFF0C;&amp;#x4E3B;&amp;#x8981;&amp;#x7528;&amp;#x4E8E;&amp;#x5BA2;&amp;#x6237;&amp;#x7AEF;&amp;#x548C;&amp;#x670D;&amp;#x52A1;&amp;#x7AEF;&amp;#x901A;&amp;#x4FE1;&amp;#x3002;">
+<meta name="twitter:image" content="https://flymarco.github.io/2017/03/21/AIDL/Binder.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://flymarco.github.io/2017/03/21/AIDL/"/>
+
+
+
+
+
+  <title> AIDL | flymarco </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">flymarco</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://flymarco.github.io/2017/03/21/AIDL/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="flymarco">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/marco.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="flymarco">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="flymarco" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                AIDL
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-21T22:30:00+08:00">
+                2017-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="AIDL"><a href="#AIDL" class="headerlink" title="AIDL"></a>AIDL</h3><p>AIDL &#x5168;&#x79F0;&#x4E3A; Android Interface Definition Language&#xFF0C;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x5BA2;&#x6237;&#x7AEF;&#x548C;&#x670D;&#x52A1;&#x7AEF;&#x901A;&#x4FE1;&#x3002;</p>
+<a id="more"></a>
+<h4 id="AIDL-&#x652F;&#x6301;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;"><a href="#AIDL-&#x652F;&#x6301;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;" class="headerlink" title="AIDL &#x652F;&#x6301;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;"></a>AIDL &#x652F;&#x6301;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;</h4><ol>
+<li>&#x57FA;&#x672C;&#x6570;&#x636E;&#x7C7B;&#x578B;</li>
+<li>String&#x3001;CharSequence</li>
+<li>List (&#x53EA;&#x6709; ArrayList&#xFF0C;&#x5E76;&#x4E14;&#x6BCF;&#x4E2A;&#x5143;&#x7D20;&#x5FC5;&#x987B;&#x88AB; AIDL &#x652F;&#x6301;)</li>
+<li>Map (&#x53EA;&#x6709; HashMap&#xFF0C;&#x5E76;&#x4E14;&#x6BCF;&#x4E2A;&#x5143;&#x7D20;&#x5FC5;&#x987B;&#x88AB; AIDL &#x652F;&#x6301;)</li>
+<li>Parcelable</li>
+<li>AIDL &#x63A5;&#x53E3;</li>
+</ol>
+<p>&#x81EA;&#x5B9A;&#x4E49;&#x7684; Parcelable &#x5BF9;&#x8C61;&#x90FD;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x540C;&#x540D;&#x7684; .aidl &#x6587;&#x4EF6;&#xFF0C;&#x5E76;&#x4E14;&#x58F0;&#x660E;&#x4E3A; Parcelable &#x7C7B;&#x578B;&#x3002;</p>
+<pre><code>// Book.aidl
+package xx.xx.xx;
+parcelable Book;
+</code></pre><p>&#x6240;&#x6709;&#x7684; Parcelable &#x548C; AIDL &#x5BF9;&#x8C61;&#x90FD;&#x9700;&#x8981;&#x663E;&#x5F0F;&#x7684; import &#x8FDB;&#x6587;&#x4EF6;&#x3002;</p>
+<p>AIDL&#x4E2D;&#x9664;&#x4E86;&#x57FA;&#x672C;&#x7C7B;&#x578B;&#xFF0C;&#x5176;&#x4ED6;&#x7C7B;&#x578B;&#x90FD;&#x9700;&#x8981;&#x6807;&#x4E0A;&#x65B9;&#x5411;&#xFF1A;in&#x3001;out&#x3001;inout&#x3002;in &#x8868;&#x793A;&#x8F93;&#x5165;&#x578B;&#x53C2;&#x6570;&#xFF0C;out &#x8868;&#x793A;&#x8F93;&#x51FA;&#x578B;&#x53C2;&#x6570;&#xFF0C;inout &#x8868;&#x793A;&#x8F93;&#x5165;&#x8F93;&#x51FA;&#x578B;&#x53C2;&#x6570;&#x3002;</p>
+<p>AIDL&#x4E2D;&#x53EA;&#x652F;&#x6301;&#x65B9;&#x6CD5;&#xFF0C;&#x4E0D;&#x652F;&#x6301;&#x58F0;&#x660E;&#x9759;&#x6001;&#x5E38;&#x91CF;&#xFF0C;&#x4E0D;&#x80FD;&#x4F7F;&#x7528;&#x8BBF;&#x95EE;&#x9650;&#x5B9A;&#x7B26;&#x3002;</p>
+<pre><code>// IBookManager.aidl
+package xx.xx.xx;
+
+import xx.xx.xx.Book;
+
+interface IBookManager {
+    List&lt;Book&gt; getBookList();
+    void addBook(in Book book);
+}
+</code></pre><h4 id="AIDL-&#x5B9E;&#x4F8B;"><a href="#AIDL-&#x5B9E;&#x4F8B;" class="headerlink" title="AIDL &#x5B9E;&#x4F8B;"></a>AIDL &#x5B9E;&#x4F8B;</h4><h5 id="IBookManager-java"><a href="#IBookManager-java" class="headerlink" title="IBookManager.java"></a>IBookManager.java</h5><p>&#x6839;&#x636E; IBookManager.aidl &#x81EA;&#x52A8;&#x751F;&#x6210; IBookManager.java &#x6587;&#x4EF6;</p>
+<pre><code>package com.example.server.aidl;
+
+public interface IBookManager extends android.os.IInterface {
+
+    public static abstract class Stub extends android.os.Binder implements com.example.server.aidl.IBookManager {
+        private static final java.lang.String DESCRIPTOR = &quot;com.example.server.aidl.IBookManager&quot;;
+        public Stub() {
+            this.attachInterface(this, DESCRIPTOR);
+        }
+
+        public static com.example.server.aidl.IBookManager asInterface(android.os.IBinder obj) {
+            if ((obj == null)) {
+                return null;
+            }
+            android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
+            if (((iin != null) &amp;&amp; (iin instanceof com.example.server.aidl.IBookManager))) {
+                return ((com.example.server.aidl.IBookManager) iin);
+            }
+            return new com.example.server.aidl.IBookManager.Stub.Proxy(obj);
+        }
+        @Override
+        public android.os.IBinder asBinder() {
+            return this;
+        }
+        @Override
+        public boolean onTransact(int code, android.os.Parcel data, android.os.Parcel reply, int flags) throws android.os.RemoteException {
+            switch (code) {
+                case INTERFACE_TRANSACTION : {
+                    reply.writeString(DESCRIPTOR);
+                    return true;
+                }
+                case TRANSACTION_getBookList : {
+                    data.enforceInterface(DESCRIPTOR);
+                    java.util.List&lt;com.example.server.aidl.Book&gt; _result = this.getBookList();
+                    reply.writeNoException();
+                    reply.writeTypedList(_result);
+                    return true;
+                }
+                case TRANSACTION_addBook : {
+                    data.enforceInterface(DESCRIPTOR);
+                    com.example.server.aidl.Book _arg0;
+                    if ((0 != data.readInt())) {
+                        _arg0 = com.example.server.aidl.Book.CREATOR.createFromParcel(data);
+                    } else {
+                        _arg0 = null;
+                    }
+                    this.addBook(_arg0);
+                    reply.writeNoException();
+                    return true;
+                }
+            }
+            return super.onTransact(code, data, reply, flags);
+        }
+        private static class Proxy implements com.example.server.aidl.IBookManager {
+            private android.os.IBinder mRemote;
+            Proxy(android.os.IBinder remote) {
+                mRemote = remote;
+            }
+            @Override
+            public android.os.IBinder asBinder() {
+                return mRemote;
+            }
+            public java.lang.String getInterfaceDescriptor() {
+                return DESCRIPTOR;
+            }
+            @Override
+            public java.util.List&lt;com.example.server.aidl.Book&gt; getBookList() throws android.os.RemoteException {
+                android.os.Parcel _data = android.os.Parcel.obtain();
+                android.os.Parcel _reply = android.os.Parcel.obtain();
+                java.util.List&lt;com.example.server.aidl.Book&gt; _result;
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    mRemote.transact(Stub.TRANSACTION_getBookList, _data, _reply, 0);
+                    _reply.readException();
+                    _result = _reply.createTypedArrayList(com.example.server.aidl.Book.CREATOR);
+                } finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+                return _result;
+            }
+            @Override
+            public void addBook(com.example.server.aidl.Book book) throws android.os.RemoteException {
+                android.os.Parcel _data = android.os.Parcel.obtain();
+                android.os.Parcel _reply = android.os.Parcel.obtain();
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    if ((book != null)) {
+                        _data.writeInt(1);
+                        book.writeToParcel(_data, 0);
+                    } else {
+                        _data.writeInt(0);
+                    }
+                    mRemote.transact(Stub.TRANSACTION_addBook, _data, _reply, 0);
+                    _reply.readException();
+                } finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+            }
+        }
+        static final int TRANSACTION_getBookList = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
+        static final int TRANSACTION_addBook = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
+    }
+    public java.util.List&lt;com.example.server.aidl.Book&gt; getBookList() throws android.os.RemoteException;
+    public void addBook(com.example.server.aidl.Book book) throws android.os.RemoteException;
+}
+</code></pre><p>IBookManager.java &#x6269;&#x5C55;&#x4E86; IInterface &#x63A5;&#x53E3;&#xFF0C;&#x65B0;&#x589E;&#x4E86;&#x5728; IBookManager.aidl &#x4E2D;&#x58F0;&#x660E;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<pre><code>public interface IInterface {
+    public IBinder asBinder();
+}
+</code></pre><p>&#x9759;&#x6001;&#x62BD;&#x8C61;&#x6210;&#x5458;&#x7C7B; Stub &#x5B9E;&#x73B0;&#x4E86; IBookManager &#x63A5;&#x53E3;&#xFF0C;&#x662F;&#x670D;&#x52A1;&#x7AEF;&#x7684; Binder &#x5BF9;&#x8C61;&#x3002;</p>
+<p>&#x9759;&#x6001;&#x6210;&#x5458;&#x7C7B; Proxy &#x5B9E;&#x73B0;&#x4E86; IBookManager &#x63A5;&#x53E3;&#xFF0C;&#x662F; Stub &#x7684;&#x4EE3;&#x7406;&#x7C7B;&#x3002;</p>
+<h5 id="&#x670D;&#x52A1;&#x7AEF;-Service"><a href="#&#x670D;&#x52A1;&#x7AEF;-Service" class="headerlink" title="&#x670D;&#x52A1;&#x7AEF; Service"></a>&#x670D;&#x52A1;&#x7AEF; Service</h5><p>&#x670D;&#x52A1;&#x7AEF;&#x9700;&#x8981;&#x5B9E;&#x73B0; Stub &#x7684;&#x62BD;&#x8C61;&#x65B9;&#x6CD5;&#xFF0C;&#x5177;&#x4F53;&#x5B9E;&#x73B0; IBookManager.aidl &#x4E2D;&#x58F0;&#x660E;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x4E3A;&#x5BA2;&#x6237;&#x7AEF;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x3002;</p>
+<pre><code>public class ServerService extends Service {
+
+    private CopyOnWriteArrayList&lt;Book&gt; booklist = new CopyOnWriteArrayList&lt;Book&gt;();
+
+    private IBinder mBinder = new IBookManager.Stub() {
+
+        @Override
+        public List&lt;Book&gt; getBookList() throws RemoteException {
+            // TODO Auto-generated method stub
+            return booklist;
+        }
+
+        @Override
+        public void addBook(Book book) throws RemoteException {
+            // TODO Auto-generated method stub
+            booklist.add(book);
+        }
+    };
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        booklist.add(new Book(1,&quot;first&quot;));
+        booklist.add(new Book(2,&quot;secound&quot;));
+    };
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO Auto-generated method stub
+        return mBinder;
+    }
+
+}
+</code></pre><h5 id="&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x73B0;"><a href="#&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x73B0;" class="headerlink" title="&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x73B0;"></a>&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x73B0;</h5><p>&#x5BA2;&#x6237;&#x7AEF;&#x9700;&#x8981;&#x7ED1;&#x5B9A;&#x8FDC;&#x7A0B;&#x670D;&#x52A1;&#xFF0C;&#x4F7F;&#x7528;&#x8FD4;&#x56DE;&#x7684; IBinder &#x5BF9;&#x8C61;&#x8F6C;&#x5316;&#x6210; IBookManager &#x5BF9;&#x8C61;&#xFF0C;&#x7136;&#x540E;&#x8C03;&#x7528;&#x5176;&#x65B9;&#x6CD5;&#x3002;</p>
+<pre><code>private ServiceConnection conn = new ServiceConnection() {
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        // TODO Auto-generated method stub
+        IBookManager m = IBookManager.Stub.asInterface(service);
+        try {
+            // TODO something
+        } catch (RemoteException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+};
+</code></pre><h5 id="&#x5C0F;&#x7ED3;"><a href="#&#x5C0F;&#x7ED3;" class="headerlink" title="&#x5C0F;&#x7ED3;"></a>&#x5C0F;&#x7ED3;</h5><ol>
+<li>&#x521B;&#x5EFA; .aidl &#x6587;&#x4EF6;&#xFF0C;&#x58F0;&#x660E;&#x65B9;&#x6CD5;&#x3002;&#x81EA;&#x5B9A;&#x4E49; Parcelable &#x5BF9;&#x8C61;&#x9700;&#x8981;&#x521B;&#x5EFA;&#x540C;&#x540D;&#x7684; aidl &#x6587;&#x4EF6;&#x5E76;&#x4E14;&#x58F0;&#x660E;&#xFF0C;&#x8FD8;&#x9700;&#x8981;&#x663E;&#x5F0F;&#x5F15;&#x7528;&#x3002;</li>
+<li>&#x6839;&#x636E; aidl &#x6587;&#x4EF6;&#x751F;&#x6210;&#x540C;&#x540D; java &#x6587;&#x4EF6;<ol>
+<li>&#x8BE5;&#x6587;&#x4EF6;&#x6269;&#x5C55;&#x4E86; IInterface &#x63A5;&#x53E3;&#xFF0C;&#x521B;&#x5EFA;&#x4E86; aidl &#x6587;&#x4EF6;&#x4E2D;&#x58F0;&#x660E;&#x7684;&#x65B9;&#x6CD5;</li>
+<li>&#x9759;&#x6001;&#x62BD;&#x8C61;&#x6210;&#x5458;&#x7C7B; Stub &#x7EE7;&#x627F; Binder &#x5B9E;&#x73B0;&#x8FD9;&#x4E2A;&#x63A5;&#x53E3;<ol>
+<li>DESCRIPTOR&#xFF1A;Binder &#x7684;&#x552F;&#x4E00;&#x6807;&#x8BC6;&#xFF0C;&#x901A;&#x5E38;&#x7528;&#x5F53;&#x524D;&#x7C7B;&#x540D;&#x8868;&#x793A;</li>
+<li>asInterface()&#xFF1A;&#x5C06;&#x670D;&#x52A1;&#x7AEF; Binder &#x5BF9;&#x8C61;&#x8F6C;&#x5316;&#x6210;&#x5BA2;&#x6237;&#x7AEF; AIDL &#x7C7B;&#x578B;&#x7684;&#x5BF9;&#x8C61;&#x3002;&#x5982;&#x679C;&#x5904;&#x4E8E;&#x540C;&#x8FDB;&#x7A0B;&#xFF0C;&#x8FD4;&#x56DE; Stub&#xFF0C;&#x5426;&#x5219;&#x8FD4;&#x56DE; Stub.proxy &#x5BF9;&#x8C61;</li>
+<li>asBinder&#xFF1A;&#x8FD4;&#x56DE;&#x5F53;&#x524D; Binder &#x5BF9;&#x8C61;</li>
+<li>onTransact(int code, Parcel data, Parcel reply, int flags)&#xFF1A;&#x5177;&#x4F53;&#x6267;&#x884C;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x8BF7;&#x6C42;&#x3002;code &#x8868;&#x660E;&#x5177;&#x4F53;&#x6267;&#x884C;&#x90A3;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;data &#x4E3A;&#x63A5;&#x6536;&#x5230;&#x7684;&#x53C2;&#x6570;&#xFF0C;reply &#x4E3A;&#x8FD4;&#x56DE;&#x7684;&#x53C2;&#x6570;&#x3002;&#x5982;&#x679C;&#x8FD4;&#x56DE; false &#x8868;&#x660E;&#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;&#x5931;&#x8D25;&#x3002;</li>
+</ol>
+</li>
+<li>Proxy &#x662F; Stub &#x7684;&#x4EE3;&#x7406;&#x7C7B;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x5904;&#x4E8E;&#x540C;&#x4E00;&#x8FDB;&#x7A0B;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x62FF;&#x5230;&#x7684; IBinder &#x5BF9;&#x8C61;&#x5C31;&#x662F; Proxy</li>
+</ol>
+</li>
+<li>&#x670D;&#x52A1;&#x7AEF;&#x521B;&#x5EFA; Service&#xFF0C;&#x521B;&#x5EFA; Stub &#x7684;&#x5B9E;&#x73B0;&#x5BF9;&#x8C61; mBinder&#xFF0C;&#x5728; onBind() &#x65B9;&#x6CD5;&#x4E2D;&#x8FD4;&#x56DE;&#x8FD9;&#x4E2A; mBinder &#x5BF9;&#x8C61;</li>
+<li>&#x5BA2;&#x6237;&#x7AEF;&#x7ED1;&#x5B9A;&#x8FD9;&#x4E2A;&#x670D;&#x52A1;&#xFF0C;&#x6839;&#x636E;&#x8FD4;&#x56DE;&#x7684; IBinder &#x5BF9;&#x8C61;&#x751F;&#x6210; AIDL &#x7C7B;&#x578B;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x8C03;&#x7528;&#x5176;&#x65B9;&#x6CD5;</li>
+<li>&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x8D77;&#x8FDC;&#x7A0B;&#x8BF7;&#x6C42;&#x65F6;&#xFF0C;&#x5F53;&#x524D;&#x7EBF;&#x7A0B;&#x6302;&#x8D77;&#x77E5;&#x9053;&#x670D;&#x52A1;&#x7AEF;&#x8FD4;&#x56DE;&#x6570;&#x636E;&#x3002;</li>
+<li>&#x670D;&#x52A1;&#x7AEF;&#x7684; Binder &#x65B9;&#x6CD5;&#x8FD0;&#x884C;&#x5728; Binder &#x7EBF;&#x7A0B;&#x6C60;&#x4E2D;&#x3002;</li>
+</ol>
+<p><img src="/2017/03/21/AIDL/Binder.jpg" alt="Binder"></p>
+<h4 id="&#x670D;&#x52A1;&#x7AEF;&#x8C03;&#x7528;&#x5BA2;&#x6237;&#x7AEF;&#x65B9;&#x6CD5;"><a href="#&#x670D;&#x52A1;&#x7AEF;&#x8C03;&#x7528;&#x5BA2;&#x6237;&#x7AEF;&#x65B9;&#x6CD5;" class="headerlink" title="&#x670D;&#x52A1;&#x7AEF;&#x8C03;&#x7528;&#x5BA2;&#x6237;&#x7AEF;&#x65B9;&#x6CD5;"></a>&#x670D;&#x52A1;&#x7AEF;&#x8C03;&#x7528;&#x5BA2;&#x6237;&#x7AEF;&#x65B9;&#x6CD5;</h4><h5 id="&#x5173;&#x952E;&#x6B65;&#x9AA4;"><a href="#&#x5173;&#x952E;&#x6B65;&#x9AA4;" class="headerlink" title="&#x5173;&#x952E;&#x6B65;&#x9AA4;"></a>&#x5173;&#x952E;&#x6B65;&#x9AA4;</h5><p>&#x5BA2;&#x6237;&#x7AEF;&#x521B;&#x5EFA; AIDL &#x6587;&#x4EF6;&#xFF0C;&#x58F0;&#x660E;&#x65B9;&#x6CD5;</p>
+<pre><code>// IListener.aidl
+package com.example.server.aidl;
+import com.example.server.aidl.Book;
+interface IListener {
+    void onNewBook(in Book book);
+}
+</code></pre><p>&#x670D;&#x52A1;&#x7AEF;&#x521B;&#x5EFA; AIDL &#x6587;&#x4EF6;&#x65F6;&#x5F15;&#x5165; IListener&#xFF0C;&#x58F0;&#x660E;&#x8C03;&#x7528; IListener &#x7684;&#x65B9;&#x6CD5;</p>
+<h5 id="RemoteCallbackList"><a href="#RemoteCallbackList" class="headerlink" title="RemoteCallbackList"></a>RemoteCallbackList</h5><blockquote>
+<p>RemoteCallbackList &#x662F;&#x4E13;&#x95E8;&#x7528;&#x4E8E;&#x5220;&#x9664;&#x8DE8;&#x8FDB;&#x7A0B; listener &#x7684;&#x63A5;&#x53E3;&#x3002;&#x5F53;&#x5BA2;&#x6237;&#x7AEF;&#x8FDB;&#x7A0B;&#x7EC8;&#x6B62;&#x540E;&#xFF0C;&#x80FD;&#x591F;&#x81EA;&#x52A8;&#x79FB;&#x9664;&#x6CE8;&#x518C;&#x7684; listener&#x3002;&#x5176;&#x5185;&#x90E8;&#x81EA;&#x52A8;&#x5B9E;&#x73B0;&#x4E86;&#x7EBF;&#x7A0B;&#x540C;&#x6B65;&#x529F;&#x80FD;&#x3002;</p>
+</blockquote>
+<p>RemoteCallbackList &#x63A5;&#x53D7; IInterface &#x7C7B;&#x578B;&#x7684;&#x53C2;&#x6570;&#xFF1A;</p>
+<pre><code>public class RemoteCallbackList&lt;E extends IInterface&gt; {}
+</code></pre><p>&#x5176;&#x5185;&#x90E8;&#x7ED3;&#x6784;&#x4E3A;&#x4E00;&#x4E2A; ArrayMap<ibinder, callback="">&#xFF1A;</ibinder,></p>
+<pre><code>ArrayMap&lt;IBinder, Callback&gt; mCallbacks = new ArrayMap&lt;IBinder, Callback&gt;();
+</code></pre><p>key &#x548C; value &#x83B7;&#x53D6;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code>IBinder binder = callback.asBinder();
+Callback cb = new Callback(callback, cookie);
+</code></pre><p>Callback &#x662F;&#x5C40;&#x90E8;&#x7C7B;&#xFF0C;&#x7ED1;&#x5B9A;&#x4E86; listener &#x548C; DeathRecipient&#xFF1A;</p>
+<pre><code>private final class Callback implements IBinder.DeathRecipient {
+    final E mCallback;
+    final Object mCookie;
+
+    Callback(E callback, Object cookie) {
+        mCallback = callback;
+        mCookie = cookie;
+    }
+
+    public void binderDied() {
+        synchronized (mCallbacks) {
+            mCallbacks.remove(mCallback.asBinder());
+        }
+        onCallbackDied(mCallback, mCookie);
+    }
+}
+</code></pre><p>&#x5728;&#x6CE8;&#x518C;&#x65F6;&#x5C06; Callback &#x5B9E;&#x4F8B;&#x6DFB;&#x52A0;&#x8FDB; ArrayMap&#xFF0C;&#x5E76;&#x4E14;&#x8BBE;&#x7F6E;&#x6B7B;&#x4EA1;&#x4EE3;&#x7406;&#xFF1A;</p>
+<pre><code>public boolean register(E callback, Object cookie) {
+    synchronized (mCallbacks) {
+        if (mKilled) {
+            return false;
+        }
+        IBinder binder = callback.asBinder();
+        try {
+            Callback cb = new Callback(callback, cookie);
+            binder.linkToDeath(cb, 0);
+            mCallbacks.put(binder, cb);
+            return true;
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+}
+</code></pre><p>&#x89E3;&#x9664;&#x6CE8;&#x518C;&#x65F6;&#x5220;&#x9664; callback,&#x5E76;&#x4E14;&#x53D6;&#x6D88;&#x6B7B;&#x4EA1;&#x4EE3;&#x7406;</p>
+<pre><code>public boolean unregister(E callback) {
+    synchronized (mCallbacks) {
+        Callback cb = mCallbacks.remove(callback.asBinder());
+        if (cb != null) {
+            cb.mCallback.asBinder().unlinkToDeath(cb, 0);
+            return true;
+        }
+        return false;
+    }
+}
+</code></pre><p>&#x4F7F;&#x7528; RemoteCallbackList&#xFF1A;</p>
+<pre><code>final int N = mListenerList.beginBroadcast();
+for (int i = 0; i &lt; N; i++) {
+    Listener l = mListenerList.getBroadcastItem(i);
+    // do something
+}
+mListenerList.finishBroadcast();
+</code></pre><h4 id="AIDL-&#x4F7F;&#x7528;&#x6743;&#x9650;&#x9A8C;&#x8BC1;"><a href="#AIDL-&#x4F7F;&#x7528;&#x6743;&#x9650;&#x9A8C;&#x8BC1;" class="headerlink" title="AIDL &#x4F7F;&#x7528;&#x6743;&#x9650;&#x9A8C;&#x8BC1;"></a>AIDL &#x4F7F;&#x7528;&#x6743;&#x9650;&#x9A8C;&#x8BC1;</h4><ol>
+<li>&#x5728; onBind() &#x65B9;&#x6CD5;&#x4E2D;&#x9A8C;&#x8BC1;&#x6743;&#x9650;</li>
+<li>&#x5728; onTransact() &#x65B9;&#x6CD5;&#x4E2D;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#xFF0C;&#x8FD4;&#x56DE; false &#x8868;&#x793A;&#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;&#x5931;&#x8D25;</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AIDL/" rel="tag"># AIDL</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/21/Android动画/" rel="next" title="Android 动画">
+                <i class="fa fa-chevron-left"></i> Android 动画
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/marco.png"
+               alt="flymarco" />
+          <p class="site-author-name" itemprop="name">flymarco</p>
+          <p class="site-description motion-element" itemprop="description">While there is life there is hope</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FlyMarco" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xiaobaohang" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/liu-bao-xing-77" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#AIDL"><span class="nav-number">1.</span> <span class="nav-text">AIDL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AIDL-支持的数据类型"><span class="nav-number">1.1.</span> <span class="nav-text">AIDL 支持的数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AIDL-实例"><span class="nav-number">1.2.</span> <span class="nav-text">AIDL 实例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#IBookManager-java"><span class="nav-number">1.2.1.</span> <span class="nav-text">IBookManager.java</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#服务端-Service"><span class="nav-number">1.2.2.</span> <span class="nav-text">服务端 Service</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#客户端实现"><span class="nav-number">1.2.3.</span> <span class="nav-text">客户端实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#小结"><span class="nav-number">1.2.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务端调用客户端方法"><span class="nav-number">1.3.</span> <span class="nav-text">服务端调用客户端方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#关键步骤"><span class="nav-number">1.3.1.</span> <span class="nav-text">关键步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RemoteCallbackList"><span class="nav-number">1.3.2.</span> <span class="nav-text">RemoteCallbackList</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AIDL-使用权限验证"><span class="nav-number">1.4.</span> <span class="nav-text">AIDL 使用权限验证</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flymarco</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
