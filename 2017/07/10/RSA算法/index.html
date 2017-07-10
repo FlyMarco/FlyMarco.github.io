@@ -1,0 +1,731 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法," />
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="&amp;#x57FA;&amp;#x7840;&amp;#x77E5;&amp;#x8BC6;&amp;#x4E92;&amp;#x8D28;&amp;#x6570;
+&amp;#x516C;&amp;#x56E0;&amp;#x6570;&amp;#x53EA;&amp;#x6709; 1 &amp;#x7684;&amp;#x4E24;&amp;#x4E2A;&amp;#x6570;&amp;#xFF0C;&amp;#x53EB;&amp;#x505A;&amp;#x4E92;&amp;#x8D28;&amp;#x6570;&amp;#x3002;
+
+&amp;#x5224;&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RSA 算法">
+<meta property="og:url" content="https://flymarco.github.io/2017/07/10/RSA算法/index.html">
+<meta property="og:site_name" content="flymarco">
+<meta property="og:description" content="&amp;#x57FA;&amp;#x7840;&amp;#x77E5;&amp;#x8BC6;&amp;#x4E92;&amp;#x8D28;&amp;#x6570;
+&amp;#x516C;&amp;#x56E0;&amp;#x6570;&amp;#x53EA;&amp;#x6709; 1 &amp;#x7684;&amp;#x4E24;&amp;#x4E2A;&amp;#x6570;&amp;#xFF0C;&amp;#x53EB;&amp;#x505A;&amp;#x4E92;&amp;#x8D28;&amp;#x6570;&amp;#x3002;
+
+&amp;#x5224;&amp;#">
+<meta property="og:updated_time" content="2017-07-10T13:09:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RSA 算法">
+<meta name="twitter:description" content="&amp;#x57FA;&amp;#x7840;&amp;#x77E5;&amp;#x8BC6;&amp;#x4E92;&amp;#x8D28;&amp;#x6570;
+&amp;#x516C;&amp;#x56E0;&amp;#x6570;&amp;#x53EA;&amp;#x6709; 1 &amp;#x7684;&amp;#x4E24;&amp;#x4E2A;&amp;#x6570;&amp;#xFF0C;&amp;#x53EB;&amp;#x505A;&amp;#x4E92;&amp;#x8D28;&amp;#x6570;&amp;#x3002;
+
+&amp;#x5224;&amp;#">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://flymarco.github.io/2017/07/10/RSA算法/"/>
+
+
+
+
+
+  <title> RSA 算法 | flymarco </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">flymarco</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://flymarco.github.io/2017/07/10/RSA算法/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="flymarco">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/marco.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="flymarco">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="flymarco" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                RSA 算法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-10T20:55:00+08:00">
+                2017-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/基础/" itemprop="url" rel="index">
+                    <span itemprop="name">基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="&#x57FA;&#x7840;&#x77E5;&#x8BC6;"><a href="#&#x57FA;&#x7840;&#x77E5;&#x8BC6;" class="headerlink" title="&#x57FA;&#x7840;&#x77E5;&#x8BC6;"></a>&#x57FA;&#x7840;&#x77E5;&#x8BC6;</h4><h5 id="&#x4E92;&#x8D28;&#x6570;"><a href="#&#x4E92;&#x8D28;&#x6570;" class="headerlink" title="&#x4E92;&#x8D28;&#x6570;"></a>&#x4E92;&#x8D28;&#x6570;</h5><blockquote>
+<p>&#x516C;&#x56E0;&#x6570;&#x53EA;&#x6709; 1 &#x7684;&#x4E24;&#x4E2A;&#x6570;&#xFF0C;&#x53EB;&#x505A;&#x4E92;&#x8D28;&#x6570;&#x3002;</p>
+</blockquote>
+<h6 id="&#x5224;&#x65AD;&#x65B9;&#x6CD5;"><a href="#&#x5224;&#x65AD;&#x65B9;&#x6CD5;" class="headerlink" title="&#x5224;&#x65AD;&#x65B9;&#x6CD5;"></a>&#x5224;&#x65AD;&#x65B9;&#x6CD5;</h6><a id="more"></a>
+<ul>
+<li>&#x4E24;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x8D28;&#x6570;&#x4E00;&#x5B9A;&#x662F;&#x4E92;&#x8D28;&#x6570;</li>
+<li>&#x4E00;&#x4E2A;&#x8D28;&#x6570;&#xFF0C;&#x53E6;&#x4E00;&#x4E2A;&#x4E0D;&#x4E3A;&#x5B83;&#x7684;&#x500D;&#x6570;&#xFF0C;&#x8FD9;&#x4E24;&#x4E2A;&#x6570;&#x4E3A;&#x4E92;&#x8D28;&#x6570;</li>
+<li>&#x76F8;&#x90BB;&#x7684;&#x4E24;&#x4E2A;&#x81EA;&#x7136;&#x6570;&#x662F;&#x4E92;&#x8D28;&#x6570;</li>
+<li>&#x76F8;&#x90BB;&#x7684;&#x4E24;&#x4E2A;&#x5947;&#x6570;&#x662F;&#x4E92;&#x8D28;&#x6570;</li>
+<li>&#x8F83;&#x5927;&#x6570;&#x662F;&#x8D28;&#x6570;&#x7684;&#x4E24;&#x4E2A;&#x6570;&#x662F;&#x4E92;&#x8D28;&#x6570;</li>
+<li>&#x5C0F;&#x6570;&#x662F;&#x8D28;&#x6570;&#xFF0C;&#x5927;&#x6570;&#x4E0D;&#x662F;&#x5C0F;&#x6570;&#x7684;&#x500D;&#x6570;&#x7684;&#x4E24;&#x4E2A;&#x6570;&#x662F;&#x4E92;&#x8D28;&#x6570;</li>
+<li>1&#x4E0D;&#x662F;&#x8D28;&#x6570;&#x4E5F;&#x4E0D;&#x662F;&#x5408;&#x6570;&#xFF0C;&#x5B83;&#x548C;&#x4EFB;&#x4F55;&#x4E00;&#x4E2A;&#x81EA;&#x7136;&#x6570;&#x5728;&#x4E00;&#x8D77;&#x90FD;&#x662F;&#x4E92;&#x8D28;&#x6570;</li>
+<li>&#x8F97;&#x8F6C;&#x76F8;&#x9664;&#x6CD5;</li>
+</ul>
+<h5 id="&#x6B27;&#x62C9;&#x51FD;&#x6570;"><a href="#&#x6B27;&#x62C9;&#x51FD;&#x6570;" class="headerlink" title="&#x6B27;&#x62C9;&#x51FD;&#x6570;"></a>&#x6B27;&#x62C9;&#x51FD;&#x6570;</h5><blockquote>
+<p>&#x6B27;&#x62C9;&#x51FD;&#x6570;&#x5B9A;&#x4E49;&#xFF1A;&#x5BF9;&#x4E8E;&#x6B63;&#x6574;&#x6570; n&#xFF0C;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E; n &#x5E76;&#x4E14;&#x548C; n &#x4E92;&#x8D28;&#x7684;&#x6570;&#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x8BB0;&#x4F5C; &#x3C6;(n)&#x3002;</p>
+</blockquote>
+<h6 id="&#x901A;&#x5F0F;&#xFF1A;"><a href="#&#x901A;&#x5F0F;&#xFF1A;" class="headerlink" title="&#x901A;&#x5F0F;&#xFF1A;"></a>&#x901A;&#x5F0F;&#xFF1A;</h6><pre><code>&#x3C6;(n)=x(1-1/p(1))(1-1/p(2))(1-1/p(3))(1-1/p(4))...(1-1/p(x))
+</code></pre><p>p(1),p(2)&#x2026;p(x)&#x4E3A; n &#x7684;&#x6240;&#x6709;&#x8D28;&#x56E0;&#x6570;&#xFF0C;p(1) = 1&#x3002;</p>
+<h6 id="&#x6027;&#x8D28;"><a href="#&#x6027;&#x8D28;" class="headerlink" title="&#x6027;&#x8D28;"></a>&#x6027;&#x8D28;</h6><ul>
+<li>&#x5BF9;&#x4E8E;&#x8D28;&#x6570; p&#xFF0C;&#x3C6;(p) = p - 1</li>
+<li>&#x6B27;&#x62C9;&#x51FD;&#x6570;&#x662F;&#x79EF;&#x6027;&#x51FD;&#x6570;&#xFF0C;&#x5BF9;&#x4E8E;&#x8D28;&#x6570; m,n &#x4E92;&#x8D28;&#xFF0C;&#x3C6;(mn) = (m - 1) * (n - 1)</li>
+<li>&#x5BF9;&#x4E8E;&#x8D28;&#x6570; p &#x7684; k &#x6B21;&#x65B9;&#xFF0C;k &#x4E3A;&#x6B63;&#x6574;&#x6570;&#xFF0C;&#x5219; &#x3C6;(p ^ k) = p ^ k - p ^ (k - 1)</li>
+</ul>
+<h6 id="&#x6B27;&#x62C9;&#x5B9A;&#x7406;"><a href="#&#x6B27;&#x62C9;&#x5B9A;&#x7406;" class="headerlink" title="&#x6B27;&#x62C9;&#x5B9A;&#x7406;"></a>&#x6B27;&#x62C9;&#x5B9A;&#x7406;</h6><blockquote>
+<p>a ^ &#x3C6;(n) &#x2261; 1 mod n&#xFF0C;a &#x548C; n &#x4E3A;&#x4E92;&#x8D28;&#x7684;&#x6B63;&#x6574;&#x6570;&#x3002;</p>
+</blockquote>
+<p>&#x5373; a &#x7684; &#x3C6;(n) &#x6B21;&#x65B9;&#x88AB; n &#x9664;&#x7684;&#x4F59;&#x6570;&#x4E3A; 1.</p>
+<h5 id="&#x6A21;&#x53CD;&#x5143;&#x7D20;"><a href="#&#x6A21;&#x53CD;&#x5143;&#x7D20;" class="headerlink" title="&#x6A21;&#x53CD;&#x5143;&#x7D20;"></a>&#x6A21;&#x53CD;&#x5143;&#x7D20;</h5><p>&#x5982;&#x679C;&#x4E24;&#x4E2A;&#x6B63;&#x6574;&#x6570; a &#x548C; n &#x4E92;&#x8D28;&#xFF0C;&#x90A3;&#x4E48;&#x4E00;&#x5B9A;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x6574;&#x6570; b&#xFF0C;&#x4F7F;&#x5F97; ab - 1 &#x88AB; n &#x6574;&#x9664;&#xFF0C;&#x6216;&#x8005;&#x8BF4; ab &#x88AB; n &#x9664;&#x7684;&#x4F59;&#x6570;&#x662F; 1&#x3002;&#x8FD9;&#x65F6;&#xFF0C;b &#x5C31;&#x53EB;&#x505A; a &#x7684;&#x201C;&#x6A21;&#x53CD;&#x5143;&#x7D20;&#x201D;&#x3002;</p>
+<pre><code>a ^ &#x3C6;(n) = a * a ^ (&#x3C6;(n) - 1) &#x2261; 1 mod n
+</code></pre><h4 id="RSA-&#x7B97;&#x6CD5;"><a href="#RSA-&#x7B97;&#x6CD5;" class="headerlink" title="RSA &#x7B97;&#x6CD5;"></a>RSA &#x7B97;&#x6CD5;</h4><p>RSA &#x7B97;&#x6CD5;&#x662F;&#x4E00;&#x79CD;&#x516C;&#x94A5;&#x5BC6;&#x7801;&#x7B97;&#x6CD5;&#x3002;</p>
+<blockquote>
+<p>&#x516C;&#x94A5;&#x5BC6;&#x7801;&#xFF1A;&#x52A0;&#x5BC6;&#x548C;&#x89E3;&#x5BC6;&#x4F7F;&#x7528;&#x4E0D;&#x540C;&#x7684;&#x5BC6;&#x7801;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x4E5F;&#x79F0;&#x975E;&#x5BF9;&#x79F0;&#x5BC6;&#x7801;&#x3002;</p>
+</blockquote>
+<ul>
+<li>&#x968F;&#x610F;&#x9009;&#x62E9;&#x4E24;&#x4E2A;&#x5927;&#x7684;&#x8D28;&#x6570; p &#x548C; q&#xFF0C;p &#x4E0D;&#x7B49;&#x4E8E; q&#xFF0C;&#x8BA1;&#x7B97; N = p &#xD7; q</li>
+<li>&#x6839;&#x636E;&#x6B27;&#x62C9;&#x51FD;&#x6570;&#xFF0C;&#x6C42;&#x5F97; r = (p - 1) * (q - 1)</li>
+<li>&#x9009;&#x62E9;&#x4E00;&#x4E2A;&#x5C0F;&#x4E8E; r &#x7684;&#x6574;&#x6570; e&#xFF0C;&#x6C42;&#x5F97; e &#x5173;&#x4E8E;&#x6A21; r &#x7684;&#x6A21;&#x53CD;&#x5143;&#x7D20;&#xFF0C;&#x547D;&#x540D;&#x4E3A; d&#xFF08;&#x6A21;&#x53CD;&#x5143;&#x7D20;&#x5B58;&#x5728;&#xFF0C;&#x5F53;&#x4E14;&#x4EC5;&#x5F53; e &#x4E0E; r &#x4E92;&#x8D28;&#xFF09;</li>
+<li>&#x5C06; p &#x548C; q &#x7684;&#x8BB0;&#x5F55;&#x9500;&#x6BC1;</li>
+</ul>
+<h5 id="&#x52A0;&#x5BC6;"><a href="#&#x52A0;&#x5BC6;" class="headerlink" title="&#x52A0;&#x5BC6;"></a>&#x52A0;&#x5BC6;</h5><h6 id="&#x901A;&#x5F0F;&#xFF1A;-1"><a href="#&#x901A;&#x5F0F;&#xFF1A;-1" class="headerlink" title="&#x901A;&#x5F0F;&#xFF1A;"></a>&#x901A;&#x5F0F;&#xFF1A;</h6><pre><code>&#x5BC6;&#x6587; = &#x660E;&#x6587; ^ e mod N
+</code></pre><h6 id="&#x516C;&#x94A5;&#xFF1A;"><a href="#&#x516C;&#x94A5;&#xFF1A;" class="headerlink" title="&#x516C;&#x94A5;&#xFF1A;"></a>&#x516C;&#x94A5;&#xFF1A;</h6><pre><code>&#x516C;&#x94A5; &#xFF1D; (e, N)
+</code></pre><h5 id="&#x89E3;&#x5BC6;"><a href="#&#x89E3;&#x5BC6;" class="headerlink" title="&#x89E3;&#x5BC6;"></a>&#x89E3;&#x5BC6;</h5><h6 id="&#x901A;&#x5F0F;"><a href="#&#x901A;&#x5F0F;" class="headerlink" title="&#x901A;&#x5F0F;"></a>&#x901A;&#x5F0F;</h6><pre><code>&#x660E;&#x6587; &#xFF1D; &#x5BC6;&#x6587; ^ d mod N
+</code></pre><h6 id="&#x79C1;&#x94A5;"><a href="#&#x79C1;&#x94A5;" class="headerlink" title="&#x79C1;&#x94A5;"></a>&#x79C1;&#x94A5;</h6><pre><code>&#x79C1;&#x94A5; &#xFF1D; (d, N)
+</code></pre><h5 id="&#x5B9E;&#x4F8B;"><a href="#&#x5B9E;&#x4F8B;" class="headerlink" title="&#x5B9E;&#x4F8B;"></a>&#x5B9E;&#x4F8B;</h5><ol>
+<li>&#x9009;&#x53D6;&#x4E24;&#x4E2A;&#x4E0D;&#x76F8;&#x7B49;&#x7684;&#x8D28;&#x6570; 3 &#x548C; 11&#xFF0C;&#x6C42;&#x5F97; N = 3 &#xD7; 11 = 33</li>
+<li>&#x7531;&#x6B27;&#x62C9;&#x51FD;&#x6570;&#x5F97; r = 2 * 10 = 20</li>
+<li>&#x9009;&#x62E9;&#x4E00;&#x4E2A;&#x5C0F;&#x4E8E; r &#x7684;&#x6574;&#x6570; e &#x4E3A; 3&#xFF0C;&#x6C42;&#x5F97; e &#x5173;&#x4E8E;&#x6A21; r &#x7684;&#x6A21;&#x53CD;&#x5143;&#x7D20; d &#x4E3A; 7</li>
+</ol>
+<p>&#x5047;&#x8BBE;&#x660E;&#x6587;&#x4E3A; 25<br>&#x52A0;&#x5BC6;&#x5BC6;&#x6587;&#x4E3A; 25 ^ 3 mod 33 = 16<br>&#x89E3;&#x5BC6;&#x660E;&#x6587;&#x4E3A; 16 ^ 7 mod 33 = 25</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/10/camera/" rel="next" title="Camera">
+                <i class="fa fa-chevron-left"></i> Camera
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/marco.png"
+               alt="flymarco" />
+          <p class="site-author-name" itemprop="name">flymarco</p>
+          <p class="site-description motion-element" itemprop="description">While there is life there is hope</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FlyMarco" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xiaobaohang" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/liu-bao-xing-77" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#互质数"><span class="nav-number">1.1.</span> <span class="nav-text">互质数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#判断方法"><span class="nav-number">1.1.1.</span> <span class="nav-text">判断方法</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#欧拉函数"><span class="nav-number">1.2.</span> <span class="nav-text">欧拉函数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#通式："><span class="nav-number">1.2.1.</span> <span class="nav-text">通式：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#性质"><span class="nav-number">1.2.2.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#欧拉定理"><span class="nav-number">1.2.3.</span> <span class="nav-text">欧拉定理</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#模反元素"><span class="nav-number">1.3.</span> <span class="nav-text">模反元素</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RSA-算法"><span class="nav-number">2.</span> <span class="nav-text">RSA 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#加密"><span class="nav-number">2.1.</span> <span class="nav-text">加密</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#通式：-1"><span class="nav-number">2.1.1.</span> <span class="nav-text">通式：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#公钥："><span class="nav-number">2.1.2.</span> <span class="nav-text">公钥：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解密"><span class="nav-number">2.2.</span> <span class="nav-text">解密</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#通式"><span class="nav-number">2.2.1.</span> <span class="nav-text">通式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#私钥"><span class="nav-number">2.2.2.</span> <span class="nav-text">私钥</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实例"><span class="nav-number">2.3.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flymarco</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
